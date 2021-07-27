@@ -4,61 +4,61 @@ import Swal from "sweetalert2";
 const informacion = [
   {
     clave: "preliminares",
-    nombre: "suministro y colocacion de letrero",
+    producto: "suministro y colocacion de letrero",
     unidad: "pza",
     precio: 3500,
   },
   {
     clave: "preliminares",
-    nombre: "trazo y nivelacion de terreno en estructuras",
+    producto: "trazo y nivelacion de terreno en estructuras",
     unidad: "m2",
     precio: 9,
   },
   {
     clave: "otro",
-    nombre: "popo de perro",
+    producto: "popo de perro",
     unidad: "m2",
     precio: 0,
   },
   {
     clave: "azotea",
-    nombre: "excavacion a cielo abierto",
+    producto: "excavacion a cielo abierto",
     unidad: "m3",
     precio: 212,
   },
   {
     clave: "azotea",
-    nombre: "retiro de material de excavacion",
+    producto: "retiro de material de excavacion",
     unidad: "m3",
     precio: 296,
   },
   {
     clave: "azotea",
-    nombre: "plantilla de concreto hecho en obra",
+    producto: "plantilla de concreto hecho en obra",
     unidad: "m2",
     precio: 165,
   },
   {
     clave: "azotea",
-    nombre: "zapata corrida de concreto",
+    producto: "zapata corrida de concreto",
     unidad: "m2",
     precio: 854,
   },
   {
     clave: "azotea",
-    nombre: "zapata aislada de concreto",
+    producto: "zapata aislada de concreto",
     unidad: "pza",
     precio: 1460,
   },
   {
     clave: "otro",
-    nombre: "guirri mau mau",
+    producto: "guirri mau mau",
     unidad: "pza",
     precio: 1460,
   },
   {
     clave: "otro",
-    nombre: "pocket pocket",
+    producto: "pocket pocket",
     unidad: "pza",
     precio: 1460,
   },
@@ -122,7 +122,7 @@ export const ClavesConcepto = () => {
     let productoFinal = producto;
 
     const resultado = arrayProductos.find(
-      (item) => item.nombre === productoFinal || item.nombre === "otro"
+      (item) => item.producto === productoFinal || item.producto === "otro"
     );
     let res = resultado.precio * cantidad;
     let unidadFinal = resultado.unidad;
@@ -147,7 +147,12 @@ export const ClavesConcepto = () => {
       return Swal.fire("Error", "Selecciona una clave y producto", "error");
     }
 
-    if (producto === "") {
+    if (
+      producto === "" ||
+      descripcion === "" ||
+      unidad === "" ||
+      cantidad === ""
+    ) {
       return Swal.fire("Error", "Selecciona una clave y producto", "error");
     }
 
@@ -196,8 +201,8 @@ export const ClavesConcepto = () => {
                   >
                     <option value=""> Selecciona tu producto </option>
                     {arrayProductos.map((item, i) => (
-                      <option key={i} value={item.nombre}>
-                        {item.nombre}
+                      <option key={i} value={item.producto}>
+                        {item.producto}
                       </option>
                     ))}
                   </select>
@@ -221,6 +226,7 @@ export const ClavesConcepto = () => {
                 <h3> Cantidad </h3>
                 <div className="form-floating mb-2">
                   <input
+                    disabled={producto === "" ? true : false}
                     type="number"
                     className="form-control"
                     id="floatingInput9"
@@ -255,13 +261,13 @@ export const ClavesConcepto = () => {
                     disabled={true}
                     type="text"
                     className="form-control"
-                    id="floatingInput3"
+                    id="floatingInput4"
                     placeholder="a"
                     name="unidad"
                     value={unidad}
                     onChange={handleInputChange}
                   />
-                  <label htmlFor="floatingInput3"> Unidad </label>
+                  <label htmlFor="floatingInput4"> Unidad </label>
                 </div>
 
                 <div className="d-grid gap-2">
