@@ -65,9 +65,6 @@ const informacion = [
 ];
 
 export const ClavesConcepto = () => {
-  const [arrayClaves, setArrayClaves] = useState([]);
-  const [arrayProductos, setArrayProductos] = useState([]);
-
   let initialState = {
     clave: "",
     producto: "",
@@ -77,7 +74,11 @@ export const ClavesConcepto = () => {
     total: "",
   };
 
+  const [arrayClaves, setArrayClaves] = useState([]);
+  const [arrayProductos, setArrayProductos] = useState([]);
   const [data, setData] = useState(initialState);
+  const [productoId, setProductoId] = useState("");
+
   let { clave, producto, descripcion, unidad, cantidad, total } = data;
 
   const handleCargarProductos = (e) => {
@@ -93,28 +94,17 @@ export const ClavesConcepto = () => {
     });
 
     const names = informacion.map((item) => item.clave);
-    console.log(names);
+    // console.log(names);
     let myArray = [...new Set(names)];
     setArrayClaves(myArray);
-    console.log(myArray);
+    // console.log(myArray);
 
     const resultado = informacion.filter((item) => item.clave === opcion);
     if (resultado !== undefined) {
       //   const resultadoFinal = resultado.productos;
-      console.log(resultado);
+      //   console.log(resultado);
       setArrayProductos(resultado);
     }
-  };
-
-  // metodo que espera el cambio del SELECT de los productos
-  const handleVerificarProducto = (e) => {
-    setData({
-      ...data,
-      cantidad: "",
-      total: "",
-      descripcion: "",
-      unidad: "",
-    });
   };
 
   const handleCargarTotal = (e) => {
@@ -126,12 +116,25 @@ export const ClavesConcepto = () => {
     );
     let res = resultado.precio * cantidad;
     let unidadFinal = resultado.unidad;
-    console.log(unidadFinal);
+    let productoIdFinal = resultado.unidad;
+    setProductoId(productoIdFinal);
+    // console.log(unidadFinal);
     setData({
       ...data,
       cantidad: cantidad,
       total: res,
       unidad: unidadFinal,
+    });
+  };
+
+  // metodo que espera el cambio del SELECT de los productos
+  const handleVerificarProducto = (e) => {
+    setData({
+      ...data,
+      cantidad: "",
+      total: "",
+      descripcion: "",
+      unidad: "",
     });
   };
 
@@ -155,7 +158,7 @@ export const ClavesConcepto = () => {
     ) {
       return Swal.fire("Error", "Selecciona una clave y producto", "error");
     }
-
+    data.productoId = productoId;
     console.log(data);
   };
 
